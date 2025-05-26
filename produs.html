@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Jocuri - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            margin: 0;
+            min-height: 100vh;
+        }
+        .flying-loupe {
+            position: absolute;
+            opacity: 0.18;
+            pointer-events: none;
+            animation: fly 18s linear infinite;
+        }
+        .loupe1 { top: 10%; left: 5%; width: 60px; animation-delay: 0s;}
+        .loupe2 { top: 30%; left: 80%; width: 50px; animation-delay: 3s;}
+        .loupe3 { top: 60%; left: 15%; width: 40px; animation-delay: 6s;}
+        .loupe4 { top: 80%; left: 60%; width: 55px; animation-delay: 9s;}
+        .loupe5 { top: 50%; left: 40%; width: 45px; animation-delay: 12s;}
+        .loupe6 { top: 20%; left: 70%; width: 35px; animation-delay: 15s;}
+        @keyframes fly {
+            0% { transform: translateY(0) scale(1);}
+            50% { transform: translateY(-40px) scale(1.1);}
+            100% { transform: translateY(0) scale(1);}
+        }
+        .container {
+            max-width: 1100px;
+            margin: 60px auto 0 auto;
+            background: rgba(30,30,30,0.92);
+            border-radius: 18px;
+            box-shadow: 0 0 30px #0008;
+            padding: 2.5rem 2rem 2rem 2rem;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #ffd700;
+            letter-spacing: 2px;
+        }
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+        .product-card {
+            background: #222;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #0006;
+            padding: 1.2rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 8px 24px #ffd70055;
+            z-index: 2;
+        }
+        .product-card img {
+            width: 100%;
+            max-width: 180px;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 10px #0008;
+        }
+        .product-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #ffd700;
+        }
+        .product-desc {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 0.7rem;
+        }
+        .product-price {
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 1rem;
+        }
+        .btn-buy {
+            background: #ffd700;
+            color: #222;
+            border: none;
+            border-radius: 6px;
+            padding: 0.6rem 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-buy:hover {
+            background: #fff;
+            color: #222;
+        }
+        .navbar {
+            width: 100%;
+            background: rgba(30,30,30,0.98);
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+            box-shadow: 0 2px 16px #0006;
+        }
+        .navbar .nav-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ffd700;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 8px #000a;
+        }
+        .navbar #nav-links a {
+            color: #fff;
+            margin-left: 1.2rem;
+            text-decoration: none;
+            font-size: 1.08rem;
+            transition: color 0.2s;
+        }
+        .navbar #nav-links a:hover {
+            color: #ffd700;
+        }
+        @media (max-width: 700px) {
+            .container { padding: 1rem 0.3rem; }
+            .navbar .nav-content { flex-direction: column; gap: 0.7rem; }
+            .navbar #nav-links a { margin-left: 0.7rem; font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG-uri pentru efectul de lupe zburătoare -->
+    <svg class="flying-loupe loupe1" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe2" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe3" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe4" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe5" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe6" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">BlackVault</div>
+            <div id="nav-links"></div>
+        </div>
+    </nav>
+
+    <div class="container" style="margin-top: 110px;">
+        <h1>Jocuri disponibile</h1>
+        <div class="products-grid">
+            <!-- Exemplu de produs -->
+            <div class="product-card">
+                <img src="images/game1.jpg" alt="Game 1">
+                <div class="product-title">Cyber Adventure</div>
+                <div class="product-desc">Un joc de acțiune SF cu grafică uimitoare și poveste captivantă.</div>
+                <div class="product-price">129 RON</div>
+                <button class="btn-buy">Adaugă în coș</button>
+            </div>
+            <div class="product-card">
+                <img src="images/game2.jpg" alt="Game 2">
+                <div class="product-title">Fantasy Quest</div>
+                <div class="product-desc">Explorează lumi magice și învinge monștri legendari!</div>
+                <div class="product-price">99 RON</div>
+                <button class="btn-buy">Adaugă în coș</button>
+            </div>
+            <div class="product-card">
+                <img src="images/game3.jpg" alt="Game 3">
+                <div class="product-title">Speed Racers</div>
+                <div class="product-desc">Curse nebune cu mașini tunate și efecte spectaculoase.</div>
+                <div class="product-price">89 RON</div>
+                <button class="btn-buy">Adaugă în coș</button>
+            </div>
+            <!-- Adaugă mai multe produse după nevoie -->
+        </div>
+    </div>
+
+    <script>
+        // Navbar dinamic: ascunde/afișează login/register dacă ești logat
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            const user = localStorage.getItem('user_curent');
+            let html = `
+                <a href="index.php">Acasă</a>
+                <a href="produs.html">Jocuri</a>
+                <a href="cos.html">Coș</a>
+            `;
+            if (user) {
+                html += `
+                    <a href="cont.html">Contul meu</a>
+                    <a href="#" id="logout-link" style="background:#fff;color:#222;">Deconectare</a>
+                `;
+            } else {
+                html += `
+                    <a href="login_form.php">Login</a>
+                    <a href="register_form.php">Înregistrare</a>
+                `;
+            }
+            nav.innerHTML = html;
+            // Delogare rapidă
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login_form.php";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+    </script>
+    <script>
+    // ... restul scriptului tău ...
+
+    // Previne reîncărcarea inutilă dacă dai click pe pagina curentă din navbar
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.getElementById('nav-links');
+        nav.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                const href = e.target.getAttribute('href');
+                // Compară doar numele fișierului
+                if (window.location.pathname.endsWith(href)) {
+                    e.preventDefault();
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
+</body>
+</html>

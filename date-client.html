@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Date client comandă</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(39,201,64,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(39,201,64,0.08);
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            max-width: 420px;
+            margin: 0 auto;
+            margin-top: 3.5rem;
+            background: rgba(255,255,255,0.13);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 2.2rem 1.2rem 2rem 1.2rem;
+            backdrop-filter: blur(16px);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+        }
+        .main-content h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 24px #00000044;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .client-data {
+            width: 100%;
+            background: rgba(39,201,64,0.09);
+            border-radius: 14px;
+            padding: 1.2rem 1rem;
+            margin-bottom: 1.2rem;
+            color: #ffd700;
+            font-size: 1.08rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+            box-shadow: 0 2px 12px 0 rgba(39,201,64,0.08);
+        }
+        .client-data label {
+            color: #27c940;
+            font-weight: 700;
+            display: inline-block;
+            width: 140px;
+        }
+        .client-data .row {
+            margin-bottom: 0.7em;
+        }
+        .back-btn {
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            margin-bottom: 1.2rem;
+            margin-top: 1.2rem;
+            font-family: 'Montserrat', Arial, sans-serif;
+        }
+        .back-btn:hover { background: #222; color: #fff; transform: scale(1.04);}
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 1.2rem; padding: 1.2rem 0.5rem 1rem 0.5rem; }
+            .main-content { margin-top: 1.5rem; padding: 1.2rem 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content">
+        <h1>Date client comandă</h1>
+        <div class="client-data" id="client-data"></div>
+        <button class="back-btn" onclick="window.location.href='admin-comenzi.html'">Înapoi la administrare comenzi</button>
+    </div>
+    <script>
+        // Navbar dinamic
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            let user = {};
+            try {
+                user = JSON.parse(localStorage.getItem('user_curent') || '{}');
+            } catch (e) {}
+            let html = `
+                <a href="index.html">Acasă</a>
+                <a href="produse.html">Produse</a>
+                <a href="cos.html">Coș</a>
+            `;
+            if (user && (user.username || user.email)) {
+                html += `<a href="cont.html">Contul meu</a>`;
+                if (user.tip === "admin" || user.rol === "admin" || user.isAdmin) {
+                    html += `
+                        <a href="admin-produse.html">Admin Produse</a>
+                        <a href="admin-comenzi.html">Admin Comenzi</a>
+                        <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                    `;
+                }
+                html += `<a href="#" id="logout-link" style="background:#c92727;color:#fff;">Deconectare</a>`;
+            } else {
+                html += `
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Înregistrare</a>
+                `;
+            }
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login.html";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+
+        // Preia id-ul comenzii din URL
+        function getParam(name) {
+            let url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+
+        // Afișează datele clientului pentru comanda selectată
+        function afiseazaDateClient() {
+            const id = getParam('id');
+            let comenzi = [];
+            try {
+                comenzi = JSON.parse(localStorage.getItem('comenzi') || '[]');
+            } catch (e) { comenzi = []; }
+            // Caută și în arhivă dacă nu găsește
+            let comanda = comenzi.find(c => String(c.id) === String(id));
+            if (!comanda) {
+                try {
+                    let arhiva = JSON.parse(localStorage.getItem('arhiva_comenzi') || '[]');
+                    comanda = arhiva.find(c => String(c.id) === String(id));
+                } catch (e) {}
+            }
+            const container = document.getElementById('client-data');
+            if (!comanda) {
+                container.innerHTML = "<b style='color:red'>Comanda nu a fost găsită!</b>";
+                return;
+            }
+            container.innerHTML = `
+                <div class="row"><label>Nume:</label> <span>${comanda.nume || (comanda.livrare && comanda.livrare.nume) || '-'}</span></div>
+                <div class="row"><label>Telefon:</label> <span>${comanda.telefon || (comanda.livrare && comanda.livrare.telefon) || '-'}</span></div>
+                <div class="row"><label>Email:</label> <span>${comanda.email || (comanda.livrare && comanda.livrare.email) || '-'}</span></div>
+                <div class="row"><label>Județ:</label> <span>${comanda.judet || (comanda.livrare && comanda.livrare.judet) || '-'}</span></div>
+                <div class="row"><label>Localitate:</label> <span>${comanda.localitate || (comanda.livrare && comanda.livrare.localitate) || '-'}</span></div>
+                <div class="row"><label>Adresă:</label> <span>${comanda.adresa || (comanda.livrare && comanda.livrare.adresa) || '-'}</span></div>
+                <div class="row"><label>Metodă plată:</label> <span>${comanda.plata || (comanda.livrare && comanda.livrare.plata) || '-'}</span></div>
+                <div class="row"><label>Metodă livrare:</label> <span>${comanda.livrare ? (comanda.livrare.livrare || '-') : (comanda.livrare || '-')}</span></div>
+                <div class="row"><label>Cost livrare:</label> <span>${(comanda.costLivrare !== undefined ? comanda.costLivrare : (comanda.livrare && comanda.livrare.costLivrare)) !== undefined ? (comanda.costLivrare !== undefined ? comanda.costLivrare : comanda.livrare.costLivrare) + ' lei' : '-'}</span></div>
+                <div class="row"><label>Produse comandate:</label> <span>${(comanda.produse && comanda.produse.length) ? comanda.produse.map(p => `${p.nume} x${p.cantitate || 1}`).join(', ') : '-'}</span></div>
+                <div class="row"><label>Status comandă:</label> <span>${comanda.status || '-'}</span></div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', afiseazaDateClient);
+    </script>
+</body>
+</html>

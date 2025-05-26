@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Contul meu - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(39,201,64,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.18);
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 3.5rem;
+            background: rgba(255,255,255,0.13);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 3.5rem 3rem 3rem 3rem;
+            backdrop-filter: blur(16px);
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: none;}
+        }
+        .main-content h1 {
+            color: #fff;
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 24px #00000044;
+        }
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: #232526;
+            color: #ffd700;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            margin-bottom: -2px;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: #fff;
+            color: #222;
+        }
+        .tab-content {
+            width: 100%;
+            background: rgba(34,37,44,0.7);
+            border-radius: 0 0 18px 18px;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+            min-height: 120px;
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .btn {
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            margin-top: 1rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .btn:hover { background: #222; color: #fff; transform: scale(1.06);}
+        .msg {
+            position: fixed;
+            left: 50%;
+            top: 2.5rem;
+            transform: translateX(-50%);
+            background: #232526;
+            color: #ffd700;
+            padding: 1rem 2.2rem;
+            border-radius: 16px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.13);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 100;
+            transition: opacity 0.3s;
+        }
+        .msg.show { opacity: 1; pointer-events: auto;}
+        .reset-links {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+        }
+        .reset-links a {
+            color: #ffd700;
+            font-weight: 600;
+            text-decoration: underline;
+            font-size: 1.08rem;
+            transition: color 0.2s;
+        }
+        .reset-links a:hover {
+            color: #fff;
+        }
+        @media (max-width: 900px) {
+            .main-content { padding: 2rem 0.7rem; }
+        }
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 1.2rem; padding: 1.2rem 0.5rem 1rem 0.5rem; }
+            .main-content h1 { font-size: 1.5rem; }
+            .main-content { margin-top: 1.5rem; padding: 1.2rem 0.3rem; }
+            .tabs { flex-direction: column; gap: 0.3rem;}
+        }
+        /* Lupe zburătoare */
+        .flying-loupe {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 60px;
+            height: 60px;
+            z-index: 1;
+            opacity: 0.7;
+            animation: flyLoupe linear infinite;
+            pointer-events: none;
+        }
+        .flying-loupe.loupe1 { top: 12%; animation-duration: 13s; }
+        .flying-loupe.loupe2 { top: 30%; animation-duration: 17s; animation-delay: 3s;}
+        .flying-loupe.loupe3 { top: 55%; animation-duration: 21s; animation-delay: 7s;}
+        .flying-loupe.loupe4 { top: 70%; animation-duration: 15s; animation-delay: 1s;}
+        .flying-loupe.loupe5 { top: 85%; animation-duration: 19s; animation-delay: 5s;}
+        .flying-loupe.loupe6 { top: 40%; animation-duration: 23s; animation-delay: 9s;}
+        @keyframes flyLoupe {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG-uri pentru efect vizual -->
+    <svg class="flying-loupe loupe1" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe2" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe3" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe4" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe5" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe6" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content" id="main-content" style="display:none;">
+        <h1>Contul meu</h1>
+        <div class="tabs">
+            <button class="tab-btn" id="tab-btn-date" onclick="showTab('date')">Date personale</button>
+            <button class="tab-btn" id="tab-btn-istoric" onclick="showTab('istoric')">Istoric comenzi</button>
+            <a href="generic.html" class="tab-btn" id="tab-btn-secret" style="text-align:center;">Secret game</a>
+            <button class="tab-btn" id="admin-tab" style="display:none;" onclick="showTab('admin')">Admin</button>
+        </div>
+        <div id="tab-date" class="tab-content"></div>
+        <div id="tab-istoric" class="tab-content"></div>
+        <div id="tab-admin" class="tab-content"></div>
+        <div class="reset-links" id="reset-links" style="display:none;">
+            <a href="resetare-parole.html">Resetează parola folosind codul de backup primit la crearea contului</a>
+        </div>
+        <button class="btn" id="logout-btn" onclick="logout()" style="display:none;">Deconectare</button>
+    </div>
+    <div class="msg" id="msg"></div>
+    <script>
+        // Navbar dinamic cu opțiuni admin dacă userul e admin
+        function renderNavLinks(user) {
+            const nav = document.getElementById('nav-links');
+            let html = `
+                <a href="index.php">Acasă</a>
+                <a href="produse.html">Jocuri</a>
+                <a href="cos.html">Coș</a>
+            `;
+            if (user && (user.username || user.email)) {
+                html += `<a href="cont.html">Contul meu</a>`;
+                if (user.tip === "admin" || user.rol === "admin" || user.isAdmin) {
+                    html += `
+                        <a href="admin-produse.html">Admin Produse</a>
+                        <a href="admin-comenzi.html">Admin Comenzi</a>
+                        <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                    `;
+                }
+                html += `<a href="#" id="logout-link" style="background:#fff;color:#222;">Deconectare</a>`;
+            } else {
+                html += `
+                    <a href="login_form.php">Login</a>
+                    <a href="register_form.php">Înregistrare</a>
+                `;
+            }
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    logoutUser();
+                };
+            }, 100);
+        }
+
+        // Tab switching logic
+        function showTab(tab) {
+            document.querySelectorAll('.tab-content').forEach(div => div.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('tab-' + tab).classList.add('active');
+            document.getElementById('tab-btn-' + tab).classList.add('active');
+            // Populează tab-ul selectat
+            if(tab === 'date') populateTabDate();
+            if(tab === 'istoric') populateTabIstoric();
+            if(tab === 'admin') populateTabAdmin();
+        }
+
+        // Populare tab Date personale
+        function populateTabDate() {
+            let user = {};
+            try { user = JSON.parse(localStorage.getItem('user_curent') || '{}'); } catch(e){}
+            let codBackup = user.cod_backup;
+            if (!codBackup) {
+                let utilizatori = JSON.parse(localStorage.getItem('utilizatori') || '[]');
+                let gasit = utilizatori.find(u => u.email && u.email.trim().toLowerCase() === (user.email||"").trim().toLowerCase());
+                if (gasit && gasit.cod_backup) codBackup = gasit.cod_backup;
+            }
+            document.getElementById('tab-date').innerHTML = `
+                <label>Email:</label>
+                <span class="info-value">${user.email || ''}</span>
+                <label>Parolă:</label>
+                <span class="info-value" style="letter-spacing:2px;">${user.parola ? '********' : ''}</span>
+                <span class="backup-label">Cod backup pentru resetare parolă:</span>
+                <span class="backup-code">${codBackup ? codBackup : 'Nesetat'}</span>
+                <div class="reset-links" style="margin-top:1.5rem;">
+                    <a href="resetare-parole.html">Resetează parola folosind codul de backup primit la crearea contului</a>
+                </div>
+            `;
+        }
+
+        // Populare tab Istoric comenzi (fără status)
+        function populateTabIstoric() {
+            let user = {};
+            try { user = JSON.parse(localStorage.getItem('user_curent') || '{}'); } catch(e){}
+            let utilizatori = JSON.parse(localStorage.getItem('utilizatori') || '[]');
+            let userDb = utilizatori.find(u =>
+                (u.username && u.username === user.username) ||
+                (u.email && u.email === user.email)
+            );
+            let comenzi = userDb && userDb.comenzi ? userDb.comenzi : [];
+            if (!comenzi.length) {
+                document.getElementById('tab-istoric').innerHTML = `<p>Nu ai comenzi înregistrate.</p>`;
+                return;
+            }
+            let html = `<table style="width:100%;color:#fff;border-collapse:collapse;">
+                <tr style="background:#232526;">
+                    <th style="padding:8px;">ID</th>
+                    <th style="padding:8px;">Data</th>
+                    <th style="padding:8px;">Produse</th>
+                    <th style="padding:8px;">Total</th>
+                </tr>`;
+            comenzi.slice().reverse().forEach((c, i) => {
+                html += `<tr style="background:${i%2?'#232526':'#1a1b1c'};">
+                    <td style="padding:8px;">${c.id}</td>
+                    <td style="padding:8px;">${(c.data||'').slice(0,10)}</td>
+                    <td style="padding:8px;">${(c.produse||[]).map(p=>`${p.nume} x${p.cantitate||1}`).join('<br>')}</td>
+                    <td style="padding:8px;">${c.total ? c.total + ' lei' : '-'}</td>
+                </tr>`;
+            });
+            html += `</table>`;
+            document.getElementById('tab-istoric').innerHTML = html;
+        }
+
+        // Populare tab Admin (statistici simple)
+        function populateTabAdmin() {
+            let comenzi = JSON.parse(localStorage.getItem('comenzi') || '[]');
+            let utilizatori = JSON.parse(localStorage.getItem('utilizatori') || '[]');
+            let produse = JSON.parse(localStorage.getItem('produse') || '[]');
+            let html = `<h3 style="color:#ffd700;">Statistici rapide</h3>
+                <ul>
+                    <li>Total utilizatori: <b>${utilizatori.length}</b></li>
+                    <li>Total comenzi: <b>${comenzi.length}</b></li>
+                    <li>Total produse: <b>${produse.length}</b></li>
+                </ul>
+                <h4 style="color:#fff;">Ultimele 5 comenzi</h4>
+                <ul>`;
+            comenzi.slice(-5).reverse().forEach(c=>{
+                html += `<li>${c.nume} (${c.email}) - ${c.status} - ${c.data ? c.data.slice(0,10) : ''}</li>`;
+            });
+            html += `</ul>`;
+            document.getElementById('tab-admin').innerHTML = html;
+        }
+
+        // Deconectare
+        function logoutUser() {
+            localStorage.removeItem('user_curent');
+            window.location.href = "login.html";
+        }
+        function logout() {
+            logoutUser();
+        }
+
+        // Mesaj scurt
+        function showMsg(txt) {
+            const msg = document.getElementById('msg');
+            msg.textContent = txt;
+            msg.classList.add('show');
+            setTimeout(() => msg.classList.remove('show'), 2000);
+        }
+
+        // Inițializare la încărcare
+        (function(){
+            let user = {};
+            try {
+                user = JSON.parse(localStorage.getItem('user_curent') || '{}');
+            } catch (e) {}
+            renderNavLinks(user);
+
+            // Arată tab-ul admin doar dacă userul e admin
+            if (user && (user.tip === "admin" || user.rol === "admin" || user.isAdmin)) {
+                document.getElementById('admin-tab').style.display = '';
+            }
+            document.getElementById('main-content').style.display = '';
+            showTab('date');
+            document.getElementById('logout-btn').style.display = 'inline-block';
+        })();
+
+        // --- ACTUALIZARE STATUS ISTORIC LA FINALIZARE/ARHIVARE ---
+        // Această funcție trebuie apelată din admin-comenzi.html când adminul finalizează o comandă!
+        function updateStatusInUserComenzi(idComanda, statusNou) {
+            let utilizatori = JSON.parse(localStorage.getItem('utilizatori') || '[]');
+            let gasit = null;
+            for (let u of utilizatori) {
+                if (u.comenzi && Array.isArray(u.comenzi)) {
+                    let c = u.comenzi.find(x => String(x.id) === String(idComanda));
+                    if (c) {
+                        c.status = statusNou;
+                        gasit = true;
+                    }
+                }
+            }
+            if (gasit) {
+                localStorage.setItem('utilizatori', JSON.stringify(utilizatori));
+            }
+        }
+    </script>
+</body>
+</html>

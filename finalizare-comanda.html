@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Finalizare Comandă - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(39,201,64,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(39,201,64,0.08);
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            max-width: 420px;
+            margin: 0 auto;
+            margin-top: 3.5rem;
+            background: rgba(255,255,255,0.13);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 2.2rem 1.2rem 2rem 1.2rem;
+            backdrop-filter: blur(16px);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+        }
+        .main-content h1 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 24px #00000044;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .form-group {
+            margin-bottom: 1.2rem;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #ffd700;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.05rem;
+            margin-bottom: 0.2rem;
+        }
+        .btn-finalizeaza {
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            margin-bottom: 1.2rem;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .btn-finalizeaza:hover { background: #222; color: #fff; transform: scale(1.04);}
+        .msg {
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #ffd700;
+            font-size: 1.01rem;
+            min-height: 1.2em;
+            width: 100%;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .total-box {
+            width: 100%;
+            background: rgba(255,255,255,0.09);
+            border-radius: 14px;
+            padding: 1.2rem 1rem;
+            margin-bottom: 1.2rem;
+            color: #ffd700;
+            font-size: 1.08rem;
+            font-family: 'Inter', Arial, sans-serif;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .total-box b { color: #ffd700; }
+        /* Lupe zburătoare */
+        .flying-lupa {
+            position: fixed;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.7;
+            animation: flyLupa linear infinite;
+        }
+        .flying-lupa.lupa1 { width: 60px; height: 60px; top: 10%; left: -80px; animation-duration: 14s; }
+        .flying-lupa.lupa2 { width: 45px; height: 45px; top: 30%; left: -60px; animation-duration: 18s; animation-delay: 3s;}
+        .flying-lupa.lupa3 { width: 70px; height: 70px; top: 55%; left: -100px; animation-duration: 22s; animation-delay: 7s;}
+        .flying-lupa.lupa4 { width: 38px; height: 38px; top: 75%; left: -50px; animation-duration: 16s; animation-delay: 1s;}
+        .flying-lupa.lupa5 { width: 55px; height: 55px; top: 85%; left: -70px; animation-duration: 20s; animation-delay: 5s;}
+        @keyframes flyLupa {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 1.2rem; padding: 1.2rem 0.5rem 1rem 0.5rem; }
+            .main-content { margin-top: 1.5rem; padding: 1.2rem 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Lupe zburătoare pentru efect vizual -->
+    <svg class="flying-lupa lupa1" viewBox="0 0 60 60">
+        <circle cx="25" cy="25" r="20" stroke="#fff" stroke-width="4" fill="none"/>
+        <circle cx="25" cy="25" r="14" stroke="#ffd700" stroke-width="2" fill="none"/>
+        <rect x="38" y="38" width="14" height="6" rx="3" fill="#232526" stroke="#fff" stroke-width="3" transform="rotate(45 45 41)"/>
+    </svg>
+    <svg class="flying-lupa lupa2" viewBox="0 0 60 60">
+        <circle cx="25" cy="25" r="20" stroke="#fff" stroke-width="4" fill="none"/>
+        <circle cx="25" cy="25" r="14" stroke="#ffd700" stroke-width="2" fill="none"/>
+        <rect x="38" y="38" width="14" height="6" rx="3" fill="#232526" stroke="#fff" stroke-width="3" transform="rotate(45 45 41)"/>
+    </svg>
+    <svg class="flying-lupa lupa3" viewBox="0 0 60 60">
+        <circle cx="25" cy="25" r="20" stroke="#fff" stroke-width="4" fill="none"/>
+        <circle cx="25" cy="25" r="14" stroke="#ffd700" stroke-width="2" fill="none"/>
+        <rect x="38" y="38" width="14" height="6" rx="3" fill="#232526" stroke="#fff" stroke-width="3" transform="rotate(45 45 41)"/>
+    </svg>
+    <svg class="flying-lupa lupa4" viewBox="0 0 60 60">
+        <circle cx="25" cy="25" r="20" stroke="#fff" stroke-width="4" fill="none"/>
+        <circle cx="25" cy="25" r="14" stroke="#ffd700" stroke-width="2" fill="none"/>
+        <rect x="38" y="38" width="14" height="6" rx="3" fill="#232526" stroke="#fff" stroke-width="3" transform="rotate(45 45 41)"/>
+    </svg>
+    <svg class="flying-lupa lupa5" viewBox="0 0 60 60">
+        <circle cx="25" cy="25" r="20" stroke="#fff" stroke-width="4" fill="none"/>
+        <circle cx="25" cy="25" r="14" stroke="#ffd700" stroke-width="2" fill="none"/>
+        <rect x="38" y="38" width="14" height="6" rx="3" fill="#232526" stroke="#fff" stroke-width="3" transform="rotate(45 45 41)"/>
+    </svg>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content">
+        <h1>Finalizare comandă</h1>
+        <form id="form-comanda" autocomplete="off">
+            <div class="form-group">
+                <label for="nume">Nume</label>
+                <input type="text" id="nume" required>
+            </div>
+            <div class="form-group">
+                <label for="telefon">Telefon</label>
+                <input type="text" id="telefon" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="judet">Județ</label>
+                <input type="text" id="judet" required>
+            </div>
+            <div class="form-group">
+                <label for="localitate">Localitate</label>
+                <input type="text" id="localitate" required>
+            </div>
+            <div class="form-group">
+                <label for="adresa">Adresă</label>
+                <input type="text" id="adresa" required>
+            </div>
+            <div class="form-group">
+                <label for="plata">Metodă de plată</label>
+                <select id="plata" required>
+                    <option value="ramburs">Ramburs</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="livrare">Metodă de livrare</label>
+                <select id="livrare" required>
+                    <option value="fan">Curier - FanCurier</option>
+                    <option value="gls">Curier - GLS</option>
+                    <option value="posta">Poșta Română</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="costLivrare">Cost livrare</label>
+                <input type="number" id="costLivrare" value="25" min="0" readonly>
+            </div>
+            <div class="total-box" id="total-box"></div>
+            <button type="submit" class="btn-finalizeaza">Trimite comanda</button>
+        </form>
+        <div class="msg" id="msg"></div>
+    </div>
+    <script>
+        // Navbar dinamic
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            let user = {};
+            try {
+                user = JSON.parse(localStorage.getItem('user_curent') || '{}');
+            } catch (e) {}
+            let html = `
+                <a href="index.html">Acasă</a>
+                <a href="produse.html">Jocuri</a>
+                <a href="cos.html">Coș</a>
+            `;
+            if (user && (user.username || user.email)) {
+                html += `<a href="cont.html">Contul meu</a>`;
+                if (user.tip === "admin" || user.rol === "admin" || user.isAdmin) {
+                    html += `
+                        <a href="admin-produse.html">Admin Produse</a>
+                        <a href="admin-comenzi.html">Admin Comenzi</a>
+                        <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                    `;
+                }
+                html += `<a href="#" id="logout-link" style="background:#fff;color:#222;">Deconectare</a>`;
+            } else {
+                html += `
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Înregistrare</a>
+                `;
+            }
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login.html";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+
+        // Calculează și afișează totalul
+        function calculeazaTotal() {
+            let cos = JSON.parse(localStorage.getItem('cos') || '[]');
+            let costProduse = 0;
+            cos.forEach(p => {
+                costProduse += (Number(p.pret) || 0) * (Number(p.cantitate) || 1);
+            });
+            let costLivrare = Number(document.getElementById('costLivrare').value) || 0;
+            let total = costProduse + costLivrare;
+            document.getElementById('total-box').innerHTML = `
+                <b>Cost produse:</b> ${costProduse.toFixed(2)} lei<br>
+                <b>Cost transport:</b> ${costLivrare.toFixed(2)} lei<br>
+                <b>Total de plată:</b> <span style="color:#ffd700;font-size:1.15em;">${total.toFixed(2)} lei</span>
+            `;
+        }
+
+        // Setează costul de livrare în funcție de metodă
+        function seteazaCostLivrare() {
+            const livrare = document.getElementById('livrare');
+            const costLivrare = document.getElementById('costLivrare');
+            if (livrare.value === "fan" || livrare.value === "gls") costLivrare.value = 25;
+            else if (livrare.value === "posta") costLivrare.value = 20;
+            else costLivrare.value = 25;
+            calculeazaTotal();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Inițializare cost livrare și total
+            seteazaCostLivrare();
+
+            document.getElementById('livrare').addEventListener('change', seteazaCostLivrare);
+            document.getElementById('costLivrare').addEventListener('input', calculeazaTotal);
+
+            // Recalculează total dacă se schimbă coșul (ex: alt tab)
+            window.addEventListener('storage', function(e) {
+                if (e.key === 'cos') calculeazaTotal();
+            });
+
+            // Formular submit
+            document.getElementById('form-comanda').addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Preia datele din formular
+                const nume = document.getElementById('nume').value.trim();
+                const telefon = document.getElementById('telefon').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const judet = document.getElementById('judet').value.trim();
+                const localitate = document.getElementById('localitate').value.trim();
+                const adresa = document.getElementById('adresa').value.trim();
+                const plata = document.getElementById('plata').value;
+                const livrare = document.getElementById('livrare').value;
+                const costLivrare = Number(document.getElementById('costLivrare').value);
+
+                // Preia coșul de produse
+                let cos = JSON.parse(localStorage.getItem('cos') || '[]');
+                if (!cos.length) {
+                    document.getElementById('msg').textContent = "Coșul este gol!";
+                    return;
+                }
+
+                // Preia userul curent
+                let user = {};
+                try {
+                    user = JSON.parse(localStorage.getItem('user_curent') || '{}');
+                } catch (e) { user = {}; }
+                let client = user.username || user.email || 'anonim';
+
+                // Creează comanda
+                let comenzi = [];
+                try {
+                    comenzi = JSON.parse(localStorage.getItem('comenzi') || '[]');
+                } catch (e) { comenzi = []; }
+                let idNou = Date.now();
+                let dataComanda = new Date().toISOString();
+                let totalComanda = cos.reduce((acc, p) => acc + (Number(p.pret) || 0) * (Number(p.cantitate) || 1), 0) + costLivrare;
+                let comanda = {
+                    id: idNou,
+                    client: client,
+                    produse: cos,
+                    status: "noua",
+                    nume, telefon, email, judet, localitate, adresa, plata, livrare, costLivrare,
+                    data: dataComanda,
+                    total: totalComanda
+                };
+                comenzi.push(comanda);
+
+                // Salvează comanda în localStorage
+                try {
+                    localStorage.setItem('comenzi', JSON.stringify(comenzi));
+                } catch (err) {
+                    let arhiva = [];
+                    try {
+                        arhiva = JSON.parse(localStorage.getItem('arhiva_comenzi') || '[]');
+                    } catch (e) { arhiva = []; }
+                    arhiva = arhiva.concat(comenzi.slice(0, Math.floor(comenzi.length / 2)));
+                    comenzi = comenzi.slice(Math.floor(comenzi.length / 2));
+                    localStorage.setItem('arhiva_comenzi', JSON.stringify(arhiva));
+                    comenzi.push(comanda);
+                    localStorage.setItem('comenzi', JSON.stringify(comenzi));
+                }
+
+                // --- ISTORIC COMENZI PE USER ---
+                let utilizatori = JSON.parse(localStorage.getItem('utilizatori') || '[]');
+                let userDb = utilizatori.find(u =>
+                    (u.username && u.username === user.username) ||
+                    (u.email && u.email === user.email)
+                );
+                if (userDb) {
+                    if (!userDb.comenzi) userDb.comenzi = [];
+                    userDb.comenzi.push({
+                        id: idNou,
+                        status: "noua",
+                        produse: cos,
+                        data: dataComanda,
+                        total: totalComanda,
+                        nume, telefon, email, judet, localitate, adresa, plata, livrare, costLivrare
+                    });
+                    localStorage.setItem('utilizatori', JSON.stringify(utilizatori));
+                }
+                // --- END ISTORIC ---
+
+                // Golește coșul
+                localStorage.removeItem('cos');
+
+                // Notificare și redirect
+                document.getElementById('msg').textContent = "Comanda a fost trimisă cu succes! Veți fi redirecționat...";
+                setTimeout(() => {
+                    window.location.href = "index.html";
+                }, 1500);
+            });
+
+            // Calculează total la încărcare
+            calculeazaTotal();
+        });
+
+        // Asigură recalcularea la reload
+        window.onload = calculeazaTotal;
+    </script>
+</body>
+</html>

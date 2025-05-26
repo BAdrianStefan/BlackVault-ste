@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrare Utilizatori - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(39,201,64,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(39,201,64,0.08);
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            margin-top: 3.5rem;
+            background: rgba(255,255,255,0.13);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 2.5rem 2rem 2rem 2rem;
+            backdrop-filter: blur(16px);
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: none;}
+        }
+        h1 {
+            color: #fff;
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 24px #00000044;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(34,37,44,0.7);
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            padding: 1rem 0.7rem;
+            text-align: left;
+        }
+        th {
+            background: #fff;
+            color: #222;
+            font-weight: 700;
+        }
+        tr:nth-child(even) {
+            background: rgba(255,255,255,0.08);
+        }
+        tr:nth-child(odd) {
+            background: rgba(255,255,255,0.03);
+        }
+        .admin-badge {
+            background: #ffd700;
+            color: #232526;
+            font-weight: 700;
+            border-radius: 8px;
+            padding: 0.2em 0.7em;
+            font-size: 0.98em;
+            margin-left: 0.5em;
+        }
+        .btn-delete {
+            background: #c92727;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5em 1.2em;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover {
+            background: #a11b1b;
+        }
+        .msg {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 1.08rem;
+            margin-bottom: 1.2rem;
+        }
+        @media (max-width: 900px) {
+            .main-content { padding: 1.2rem 0.3rem; }
+            table, th, td { font-size: 0.95em; }
+        }
+        /* Pietre zburătoare */
+        .flying-stone {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 60px;
+            height: 40px;
+            background: radial-gradient(ellipse at 60% 40%, #232526 80%, #111 100%);
+            border-radius: 50% 60% 45% 55% / 60% 50% 55% 45%;
+            opacity: 0.7;
+            z-index: 1;
+            box-shadow: 0 4px 24px #000a, 0 0px 0px #27c94044;
+            animation: flyStone linear infinite;
+        }
+        .flying-stone.stone1 { width: 70px; height: 45px; top: 12%; animation-duration: 13s; }
+        .flying-stone.stone2 { width: 50px; height: 32px; top: 30%; animation-duration: 17s; animation-delay: 3s;}
+        .flying-stone.stone3 { width: 80px; height: 50px; top: 55%; animation-duration: 21s; animation-delay: 7s;}
+        .flying-stone.stone4 { width: 40px; height: 28px; top: 70%; animation-duration: 15s; animation-delay: 1s;}
+        .flying-stone.stone5 { width: 60px; height: 38px; top: 85%; animation-duration: 19s; animation-delay: 5s;}
+        .flying-stone.stone6 { width: 55px; height: 33px; top: 40%; animation-duration: 23s; animation-delay: 9s;}
+        @keyframes flyStone {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+    </style>
+</head>
+<body>
+    <!-- Pietre zburătoare pentru efect vizual -->
+    <div class="flying-stone stone1"></div>
+    <div class="flying-stone stone2"></div>
+    <div class="flying-stone stone3"></div>
+    <div class="flying-stone stone4"></div>
+    <div class="flying-stone stone5"></div>
+    <div class="flying-stone stone6"></div>
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content">
+        <h1>Administrare Utilizatori</h1>
+        <div class="msg" id="msg"></div>
+        <table id="users-table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Utilizator</th>
+                    <th>Rol</th>
+                    <th>Cod backup</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Utilizatorii vor fi generați dinamic -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Verificare acces admin
+        const userCurent = JSON.parse(localStorage.getItem('user_curent') || '{}');
+        if (!userCurent.rol || userCurent.rol !== "admin") {
+            window.location.href = "index.html";
+        }
+
+        // Navbar dinamic
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            let html = `
+                <a href="index.html">Acasă</a>
+                <a href="produse.html">Produse</a>
+                <a href="cos.html">Coș</a>
+                <a href="cont.html">Contul meu</a>
+                <a href="admin-produse.html">Admin Produse</a>
+                <a href="admin-comenzi.html">Admin Comenzi</a>
+                <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                <a href="#" id="logout-link" style="background:#c92727;color:#fff;">Deconectare</a>
+            `;
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login.html";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+
+        // Afișare utilizatori
+        function afiseazaUtilizatori() {
+            let utilizatori = JSON.parse(localStorage.getItem('utilizatori') || '[]');
+            const tbody = document.querySelector('#users-table tbody');
+            tbody.innerHTML = '';
+            if (!utilizatori.length) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#ffd700;">Nu există utilizatori.</td></tr>`;
+                return;
+            }
+            utilizatori.forEach(u => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${u.email || ''}</td>
+                        <td>${u.user || ''}</td>
+                        <td>
+                            ${u.rol === "admin" ? '<span class="admin-badge">admin</span>' : 'user'}
+                        </td>
+                        <td>${u.cod_backup || '-'}</td>
+                        <td>
+                            ${u.rol === "admin" ? '' : `<button class="btn-delete" onclick="stergeUtilizator('${u.email}')">Șterge</button>`}
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Ștergere utilizator (nu permite ștergerea adminului)
+        function stergeUtilizator(email) {
+            if (!confirm("Sigur vrei să ștergi acest utilizator?")) return;
+            let utilizatori = JSON.parse(localStorage.getItem('utilizatori') || '[]');
+            utilizatori = utilizatori.filter(u => u.email !== email);
+            localStorage.setItem('utilizatori', JSON.stringify(utilizatori));
+            afiseazaUtilizatori();
+            document.getElementById('msg').textContent = "Utilizator șters!";
+            setTimeout(() => document.getElementById('msg').textContent = '', 1800);
+        }
+
+        // Expune funcția pentru onclick dinamic
+        window.stergeUtilizator = stergeUtilizator;
+
+        // Inițializare
+        afiseazaUtilizatori();
+    </script>
+</body>
+</html>

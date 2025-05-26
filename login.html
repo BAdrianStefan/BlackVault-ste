@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Autentificare - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+        }
+        .login-container {
+            background: rgba(255,255,255,0.13);
+            border-radius: 18px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 2.5rem 2rem 2rem 2rem;
+            min-width: 320px;
+            width: 100%;
+            max-width: 350px;
+            margin: 2rem;
+            position: relative;
+            z-index: 2;
+        }
+        h2 {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            letter-spacing: 0.03em;
+        }
+        .input-group {
+            margin-bottom: 1.1rem;
+            width: 100%;
+        }
+        .input-group label {
+            font-size: 1.01rem;
+            font-weight: 600;
+            color: #e0e0e0;
+            margin-bottom: 0.3rem;
+            display: block;
+            letter-spacing: 0.01em;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 0.55rem 0.8rem;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+            font-size: 1.01rem;
+            font-family: 'Inter', Arial, sans-serif;
+            outline: none;
+            box-shadow: 0 2px 8px 0 rgba(0,0,0,0.04);
+            transition: background 0.2s, box-shadow 0.2s;
+            margin-top: 0.1rem;
+        }
+        .input-group input:focus {
+            background: rgba(255,255,255,0.22);
+            box-shadow: 0 2px 16px 0 rgba(0,0,0,0.13);
+        }
+        .show-pass-icon {
+            position: absolute;
+            right: 0.7em;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #ffd700;
+            font-size: 1.2em;
+            user-select: none;
+        }
+        .btn-login {
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            width: 100%;
+            margin-top: 0.7rem;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+        .btn-login:hover { background: #222; color: #fff; transform: scale(1.04);}
+        .forgot-link {
+            display: block;
+            margin-top: 1.1rem;
+            color: #ffd700;
+            text-align: right;
+            font-size: 0.98rem;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+        .msg {
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #ffd700;
+            font-size: 1.01rem;
+            min-height: 1.2em;
+            width: 100%;
+        }
+        /* Lupe zburătoare */
+        .flying-loupe {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 60px;
+            height: 60px;
+            z-index: 1;
+            opacity: 0.7;
+            animation: flyLoupe linear infinite;
+            pointer-events: none;
+        }
+        .flying-loupe.loupe1 { top: 12%; animation-duration: 13s; }
+        .flying-loupe.loupe2 { top: 30%; animation-duration: 17s; animation-delay: 3s;}
+        .flying-loupe.loupe3 { top: 55%; animation-duration: 21s; animation-delay: 7s;}
+        .flying-loupe.loupe4 { top: 70%; animation-duration: 15s; animation-delay: 1s;}
+        .flying-loupe.loupe5 { top: 85%; animation-duration: 19s; animation-delay: 5s;}
+        .flying-loupe.loupe6 { top: 40%; animation-duration: 23s; animation-delay: 9s;}
+        @keyframes flyLoupe {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+        /* Responsive pentru mobil */
+        @media (max-width: 600px) {
+            body {
+                align-items: flex-start;
+                padding-top: 2.5rem;
+            }
+            .login-container {
+                min-width: 0;
+                max-width: 98vw;
+                margin: 1rem 0.5rem;
+                padding: 1.2rem 0.7rem 1rem 0.7rem;
+            }
+            h2 {
+                font-size: 1.15rem;
+            }
+            .input-group label,
+            .input-group input {
+                font-size: 0.98rem;
+            }
+            .btn-login {
+                font-size: 1rem;
+                padding: 0.7rem 1rem;
+            }
+            .forgot-link {
+                font-size: 0.93rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Lupe zburătoare pentru efect vizual -->
+    <svg class="flying-loupe loupe1" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe2" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe3" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe4" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe5" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe6" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <div class="login-container">
+        <h2>Autentificare</h2>
+        <form id="login-form" method="POST" action="login.php" autocomplete="off">
+            <div class="input-group">
+                <label for="login-user">Email</label>
+                <input type="email" id="login-user" name="login_user" required autocomplete="username">
+            </div>
+            <div class="input-group">
+                <label for="login-pass">Parolă</label>
+                <div style="position:relative;">
+                    <input type="password" id="login-pass" name="login_pass" required style="padding-right:2.2em;" autocomplete="current-password">
+                    <span class="show-pass-icon" id="toggle-login-pass" title="Afișează/Ascunde parola">&#128065;</span>
+                </div>
+            </div>
+            <button type="submit" class="btn-login">Autentificare</button>
+        </form>
+        <div class="msg" id="login-msg">
+        
+        </div>
+        <div class="links" style="text-align:center; margin-top:1.2rem;">
+            <a href="register.html" style="color:#ffd700;text-decoration:underline;">Nu ai cont? Înregistrează-te</a>
+        </div>
+    </div>
+    <script>
+        // Show/hide password for login
+        document.getElementById('toggle-login-pass').onclick = function() {
+            const input = document.getElementById('login-pass');
+            if (input.type === "password") {
+                input.type = "text";
+                this.style.color = "#fff";
+            } else {
+                input.type = "password";
+                this.style.color = "#ffd700";
+            }
+        };
+    </script>
+</body>
+</html>

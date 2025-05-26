@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrare Produse - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(39,201,64,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(39,201,64,0.08);
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            max-width: 900px;
+            margin: 0 auto;
+            margin-top: 3.5rem;
+            background: rgba(255,255,255,0.13);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 2.5rem 2rem 2rem 2rem;
+            backdrop-filter: blur(16px);
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: none;}
+        }
+        h1 {
+            color: #fff;
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 24px #00000044;
+        }
+        form {
+            width: 100%;
+            margin-bottom: 2rem;
+            background: rgba(34,37,44,0.7);
+            border-radius: 18px;
+            box-shadow: 0 2px 12px 0 rgba(39,201,64,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            color: #fff;
+        }
+        label {
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        input[type="text"], input[type="number"], textarea {
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 1.2rem;
+            font-size: 1.08rem;
+            background: #232526;
+            color: #fff;
+        }
+        textarea {
+            min-height: 70px;
+            resize: vertical;
+        }
+        .btn {
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            margin-top: 0.5rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .btn:hover { background: #222; color: #fff; transform: scale(1.06);}
+        .msg {
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 1.08rem;
+            margin-bottom: 1.2rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(34,37,44,0.7);
+            border-radius: 18px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+        th, td {
+            padding: 1rem 0.7rem;
+            text-align: left;
+        }
+        th {
+            background: #fff;
+            color: #222;
+            font-weight: 700;
+        }
+        tr:nth-child(even) {
+            background: rgba(255,255,255,0.08);
+        }
+        tr:nth-child(odd) {
+            background: rgba(255,255,255,0.03);
+        }
+        .prod-img {
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 10px;
+            border: 2px solid #ffd700;
+            background: #fff;
+        }
+        .btn-delete {
+            background: #c92727;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5em 1.2em;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-delete:hover {
+            background: #a11b1b;
+        }
+        .btn-edit {
+            background: #ffd700;
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5em 1.2em;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            margin-right: 0.5em;
+            transition: background 0.2s;
+        }
+        .btn-edit:hover {
+            background: #ffe066;
+        }
+        .pret-vechi {
+            color: #bbb;
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        .pret-nou {
+            color: #ff3b3b;
+            font-weight: 800;
+        }
+        .pret-crescut {
+            color: #fff;
+            font-weight: 800;
+        }
+        .badge-reducere {
+            background: #ff3b3b;
+            color: #fff;
+            border-radius: 8px;
+            padding: 0.2rem 0.8rem;
+            font-weight: 700;
+            font-size: 0.97rem;
+            margin-right: 0.7rem;
+            margin-left: 0;
+            display: inline-block;
+            float: left;
+        }
+        @media (max-width: 900px) {
+            .main-content { padding: 1.2rem 0.3rem; }
+            table, th, td { font-size: 0.95em; }
+        }
+        /* Pietre zburătoare */
+        .flying-stone {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 60px;
+            height: 40px;
+            background: radial-gradient(ellipse at 60% 40%, #232526 80%, #111 100%);
+            border-radius: 50% 60% 45% 55% / 60% 50% 55% 45%;
+            opacity: 0.7;
+            z-index: 1;
+            box-shadow: 0 4px 24px #000a, 0 0px 0px #27c94044;
+            animation: flyStone linear infinite;
+        }
+        .flying-stone.stone1 { width: 70px; height: 45px; top: 12%; animation-duration: 13s; }
+        .flying-stone.stone2 { width: 50px; height: 32px; top: 30%; animation-duration: 17s; animation-delay: 3s;}
+        .flying-stone.stone3 { width: 80px; height: 50px; top: 55%; animation-duration: 21s; animation-delay: 7s;}
+        .flying-stone.stone4 { width: 40px; height: 28px; top: 70%; animation-duration: 15s; animation-delay: 1s;}
+        .flying-stone.stone5 { width: 60px; height: 38px; top: 85%; animation-duration: 19s; animation-delay: 5s;}
+        .flying-stone.stone6 { width: 55px; height: 33px; top: 40%; animation-duration: 23s; animation-delay: 9s;}
+        @keyframes flyStone {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+    </style>
+</head>
+<body>
+    <!-- Pietre zburătoare pentru efect vizual -->
+    <div class="flying-stone stone1"></div>
+    <div class="flying-stone stone2"></div>
+    <div class="flying-stone stone3"></div>
+    <div class="flying-stone stone4"></div>
+    <div class="flying-stone stone5"></div>
+    <div class="flying-stone stone6"></div>
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content">
+        <h1>Administrare Produse</h1>
+        <form id="produs-form" autocomplete="off">
+            <label for="nume">Nume produs:</label>
+            <input type="text" id="nume" required>
+            <label for="pret">Preț (RON):</label>
+            <input type="number" id="pret" min="0" step="0.01" required>
+            <label for="descriere">Descriere:</label>
+            <textarea id="descriere" required></textarea>
+            <label for="poza">Link poză produs:</label>
+            <input type="text" id="poza" placeholder="https://..." required>
+            <button class="btn" type="submit" id="submit-btn">Adaugă produs</button>
+            <div class="msg" id="msg"></div>
+        </form>
+        <table id="produse-table">
+            <thead>
+                <tr>
+                    <th>Poză</th>
+                    <th>Nume</th>
+                    <th>Preț</th>
+                    <th>Descriere</th>
+                    <th>Acțiuni</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Produsele vor fi generate dinamic -->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Verificare acces admin
+        const userCurent = JSON.parse(localStorage.getItem('user_curent') || '{}');
+        if (!userCurent.rol || userCurent.rol !== "admin") {
+            window.location.href = "index.html";
+        }
+
+        // Navbar dinamic
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            let html = `
+                <a href="index.html">Acasă</a>
+                <a href="produse.html">Produse</a>
+                <a href="cos.html">Coș</a>
+                <a href="cont.html">Contul meu</a>
+                <a href="admin-produse.html">Admin Produse</a>
+                <a href="admin-comenzi.html">Admin Comenzi</a>
+                <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                <a href="#" id="logout-link" style="background:#c92727;color:#fff;">Deconectare</a>
+            `;
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login.html";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+
+        // Gestionare produse
+        function getProduse() {
+            return JSON.parse(localStorage.getItem('produse') || '[]');
+        }
+        function setProduse(produse) {
+            localStorage.setItem('produse', JSON.stringify(produse));
+        }
+
+        // Variabilă pentru editare
+        let editIndex = null;
+
+        function afiseazaProduse() {
+            const produse = getProduse();
+            const tbody = document.querySelector('#produse-table tbody');
+            tbody.innerHTML = '';
+            if (!produse.length) {
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;color:#ffd700;">Nu există produse.</td></tr>`;
+                return;
+            }
+            produse.forEach((p, idx) => {
+                // Prețuri și badge reducere
+                let pretNou = Number(p.pret);
+                let pretVechi = Number(p.pretVechi) || null;
+                let pretHtml = '';
+                let reducere = 0;
+                let badgeReducere = '';
+                if (pretVechi && pretNou < pretVechi) {
+                    reducere = Math.round(100 - (pretNou / pretVechi) * 100);
+                    badgeReducere = `<span class="badge-reducere">-${reducere}%</span>`;
+                    pretHtml = `${badgeReducere}<span class="pret-vechi">${pretVechi.toFixed(2)} RON</span> <span class="pret-nou">${pretNou.toFixed(2)} RON</span>`;
+                } else if (pretVechi && pretNou > pretVechi) {
+                    pretHtml = `<span class="pret-crescut">${pretNou.toFixed(2)} RON</span>`;
+                } else {
+                    pretHtml = `<span class="pret-nou">${pretNou.toFixed(2)} RON</span>`;
+                }
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${p.poza ? `<img src="${p.poza}" class="prod-img" alt="poza produs">` : '-'}</td>
+                        <td>${p.nume || ''}</td>
+                        <td style="position:relative;">${pretHtml}</td>
+                        <td>${p.descriere || ''}</td>
+                        <td>
+                            <button class="btn-edit" onclick="editeazaProdus(${idx})">Editează</button>
+                            <button class="btn-delete" onclick="stergeProdus(${idx})">Șterge</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // Adaugă sau editează produs
+        document.getElementById('produs-form').onsubmit = function(e) {
+            e.preventDefault();
+            const nume = document.getElementById('nume').value.trim();
+            const pret = document.getElementById('pret').value;
+            const descriere = document.getElementById('descriere').value.trim();
+            const poza = document.getElementById('poza').value.trim();
+            const msg = document.getElementById('msg');
+            let produse = getProduse();
+
+            if (!nume || !pret || !descriere || !poza) {
+                msg.textContent = "Completează toate câmpurile!";
+                return;
+            }
+
+            if (editIndex === null) {
+                // Adaugă produs nou
+                let idNou = produse.length ? (parseInt(produse[produse.length-1].id || produse.length,10)+1).toString() : "1";
+                produse.push({
+                    id: idNou,
+                    nume,
+                    pret,
+                    descriere,
+                    poza,
+                    dataAdaugare: new Date().toISOString()
+                });
+                msg.textContent = "Produs adăugat!";
+            } else {
+                // Editează produs existent
+                produse[editIndex].nume = nume;
+                produse[editIndex].pret = pret;
+                produse[editIndex].descriere = descriere;
+                produse[editIndex].poza = poza;
+                msg.textContent = "Produs modificat!";
+                editIndex = null;
+                document.getElementById('submit-btn').textContent = "Adaugă produs";
+            }
+            setProduse(produse);
+            document.getElementById('produs-form').reset();
+            afiseazaProduse();
+            setTimeout(() => msg.textContent = '', 1500);
+        };
+
+        // Editează produs (toate câmpurile)
+        function editeazaProdus(idx) {
+            const produse = getProduse();
+            const produs = produse[idx];
+            document.getElementById('nume').value = produs.nume;
+            document.getElementById('pret').value = produs.pret;
+            document.getElementById('descriere').value = produs.descriere;
+            document.getElementById('poza').value = produs.poza;
+            editIndex = idx;
+            document.getElementById('submit-btn').textContent = "Salvează modificările";
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        window.editeazaProdus = editeazaProdus;
+
+        // Ștergere produs
+        function stergeProdus(idx) {
+            if (!confirm("Sigur vrei să ștergi acest produs?")) return;
+            let produse = getProduse();
+            produse.splice(idx, 1);
+            setProduse(produse);
+            afiseazaProduse();
+            // Dacă ștergi produsul aflat în editare, resetează formularul
+            if (editIndex === idx) {
+                document.getElementById('produs-form').reset();
+                editIndex = null;
+                document.getElementById('submit-btn').textContent = "Adaugă produs";
+            }
+        }
+        window.stergeProdus = stergeProdus;
+
+        // Inițializare
+        afiseazaProduse();
+    </script>
+</body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Secret Game - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(39,201,64,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.18);
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            max-width: 600px;
+            margin: 0 auto;
+            margin-top: 3.5rem;
+            background: rgba(255,255,255,0.13);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 3.5rem 3rem 3rem 3rem;
+            backdrop-filter: blur(16px);
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: none;}
+        }
+        .main-content h1 {
+            color: #ffd700;
+            font-size: 2.1rem;
+            font-weight: 800;
+            margin-bottom: 1.2rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 24px #00000044;
+        }
+        .welcome {
+            font-size: 1.18rem;
+            margin-bottom: 1.2rem;
+            color: #fff;
+            background: rgba(34,37,44,0.7);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .cta-btn {
+            background: #ffd700;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            margin-top: 1.2rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            display: inline-block;
+        }
+        .cta-btn:hover { background: #222; color: #ffd700; transform: scale(1.06);}
+        /* Secret Game style */
+        .secret-game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+        }
+        .secret-game-input {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.1rem;
+            background: #232526;
+            color: #ffd700;
+            margin-right: 0.7rem;
+        }
+        .secret-game-btn {
+            background: #ffd700;
+            color: #222;
+            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+        }
+        .secret-game-btn:hover {
+            background: #222;
+            color: #ffd700;
+            transform: scale(1.06);
+        }
+        .secret-game-status {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffd700;
+            margin-top: 0.7rem;
+        }
+        .secret-game-score {
+            font-size: 1.08rem;
+            color: #fff;
+            margin-top: 0.3rem;
+        }
+        .secret-game-badge {
+            display: inline-block;
+            background: #27c940;
+            color: #fff;
+            border-radius: 8px;
+            padding: 0.3rem 1rem;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-top: 0.7rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        @media (max-width: 900px) {
+            .main-content { padding: 2rem 0.7rem; }
+        }
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 1.2rem; padding: 1.2rem 0.5rem 1rem 0.5rem; }
+            .main-content h1 { font-size: 1.5rem; }
+            .main-content { margin-top: 1.5rem; padding: 1.2rem 0.3rem; }
+        }
+        /* Lupe zburătoare */
+        .flying-loupe {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 60px;
+            height: 60px;
+            z-index: 1;
+            opacity: 0.7;
+            animation: flyLoupe linear infinite;
+            pointer-events: none;
+        }
+        .flying-loupe.loupe1 { top: 12%; animation-duration: 13s; }
+        .flying-loupe.loupe2 { top: 30%; animation-duration: 17s; animation-delay: 3s;}
+        .flying-loupe.loupe3 { top: 55%; animation-duration: 21s; animation-delay: 7s;}
+        .flying-loupe.loupe4 { top: 70%; animation-duration: 15s; animation-delay: 1s;}
+        .flying-loupe.loupe5 { top: 85%; animation-duration: 19s; animation-delay: 5s;}
+        .flying-loupe.loupe6 { top: 40%; animation-duration: 23s; animation-delay: 9s;}
+        @keyframes flyLoupe {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+    </style>
+</head>
+<body>
+    <!-- SVG-uri pentru efect vizual -->
+    <svg class="flying-loupe loupe1" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe2" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe3" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe4" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe5" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe6" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content">
+        <div class="welcome">Aceasta este o pagină secretă cu un joc rapid !</div>
+        <h1>Secret Game</h1>
+        <div class="secret-game-container">
+            <div>
+                <b>Ghicește numărul secret (între 1 și 10):</b>
+            </div>
+            <input type="number" min="1" max="10" id="secret-game-input" class="secret-game-input" placeholder="Număr...">
+            <button class="secret-game-btn" onclick="guessSecretNumber()">Ghicește</button>
+            <button class="secret-game-btn" onclick="resetSecretGame()" style="background:#c92727;color:#fff;">Resetează jocul</button>
+            <div class="secret-game-status" id="secret-game-status"></div>
+            <div class="secret-game-score" id="secret-game-score"></div>
+        </div>
+        <a href="cont.html" class="cta-btn">Înapoi la Cont</a>
+    </div>
+    <audio id="secret-win-sound" src="https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa4c3e.mp3"></audio>
+    <audio id="secret-lose-sound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_115b9b273e.mp3"></audio>
+    <script>
+        // Navbar dinamic
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            const user = localStorage.getItem('user_curent');
+            let html = `
+                <a href="index.html">Acasă</a>
+                <a href="produse.html">Jocuri</a>
+                <a href="cos.html">Coș</a>
+            `;
+            if (user) {
+                html += `<a href="cont.html">Contul meu</a>`;
+                const userObj = JSON.parse(user);
+                if (userObj.rol === "admin" || userObj.tip === "admin" || userObj.isAdmin) {
+                    html += `
+                        <a href="admin-produse.html">Admin Produse</a>
+                        <a href="admin-comenzi.html">Admin Comenzi</a>
+                        <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                    `;
+                }
+                html += `<a href="#" id="logout-link" style="background:#fff;color:#222;">Deconectare</a>`;
+            } else {
+                html += `
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Înregistrare</a>
+                `;
+            }
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login.html";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+
+        // Joc Secret Game
+        let user = {};
+        try { user = JSON.parse(localStorage.getItem('user_curent') || '{}'); } catch(e){}
+        let progres = JSON.parse(localStorage.getItem('secret_game_progress_' + (user.email || user.username)) || '{}');
+        let bestScore = progres.bestScore || null;
+        let badge = progres.badge || false;
+        let secretNumber = progres.secretNumber || (Math.floor(Math.random()*10)+1);
+        let secretTries = progres.secretTries || 0;
+
+        function guessSecretNumber() {
+            let input = document.getElementById('secret-game-input');
+            let status = document.getElementById('secret-game-status');
+            let score = document.getElementById('secret-game-score');
+            let val = Number(input.value);
+            if (!val || val < 1 || val > 10) {
+                status.textContent = "Introdu un număr între 1 și 10!";
+                playLoseSound();
+                return;
+            }
+            secretTries = (secretTries || 0) + 1;
+            if (val === secretNumber) {
+                status.textContent = `Bravo! Ai ghicit numărul ${secretNumber} în ${secretTries} încercări!`;
+                playWinSound();
+                let badgeNow = false;
+                if (secretTries === 1) {
+                    badgeNow = true;
+                    status.innerHTML += `<br><span class="secret-game-badge">🏆 Detectiv BlackVault</span>`;
+                }
+                let progresNou = {
+                    bestScore: (bestScore === null || secretTries < bestScore) ? secretTries : bestScore,
+                    badge: badgeNow || badge,
+                    secretNumber: Math.floor(Math.random()*10)+1,
+                    secretTries: 0
+                };
+                localStorage.setItem('secret_game_progress_' + (user.email || user.username), JSON.stringify(progresNou));
+                saveProgressToBackup(user, progresNou);
+                score.innerHTML = `Cel mai bun scor: <b>${progresNou.bestScore} încercări</b>` + (progresNou.badge ? `<div class="secret-game-badge">🏆 Detectiv BlackVault</div>` : '');
+                setTimeout(()=>window.location.reload(), 2000);
+            } else if (val < secretNumber) {
+                status.textContent = "Numărul este mai mare!";
+                playLoseSound();
+            } else {
+                status.textContent = "Numărul este mai mic!";
+                playLoseSound();
+            }
+            input.value = '';
+        }
+
+        function resetSecretGame() {
+            secretNumber = Math.floor(Math.random()*10)+1;
+            secretTries = 0;
+            let progresNou = {
+                bestScore: bestScore || null,
+                badge: badge || false,
+                secretNumber: secretNumber,
+                secretTries: 0
+            };
+            localStorage.setItem('secret_game_progress_' + (user.email || user.username), JSON.stringify(progresNou));
+            saveProgressToBackup(user, progresNou);
+            window.location.reload();
+        }
+
+        function saveProgressToBackup(user, progres) {
+            // Simulare request AJAX către server
+            // fetch('https://backup.blackvault.ro/api/save-progress', { method: 'POST', body: JSON.stringify({user, progres}) })
+            console.log('Backup progres:', user, progres);
+        }
+
+        function playWinSound() {
+            try { document.getElementById('secret-win-sound').play(); } catch(e){}
+        }
+        function playLoseSound() {
+            try { document.getElementById('secret-lose-sound').play(); } catch(e){}
+        }
+
+        // Inițializare scor la încărcare
+        window.onload = function() {
+            let score = document.getElementById('secret-game-score');
+            let progres = JSON.parse(localStorage.getItem('secret_game_progress_' + (user.email || user.username)) || '{}');
+            let bestScore = progres.bestScore || null;
+            let badge = progres.badge || false;
+            score.innerHTML = (bestScore !== null ? `Cel mai bun scor: <b>${bestScore} încercări</b>` : '') +
+                (badge ? `<div class="secret-game-badge">🏆 Detectiv BlackVault</div>` : '');
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Produse - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            width: 100vw;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(0,0,0,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.18);
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        .main-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            margin-top: 3.5rem;
+            background: none;
+            border-radius: 24px;
+            box-shadow: none;
+            border: none;
+            padding: 2.5rem 2rem 2rem 2rem;
+            backdrop-filter: none;
+            min-height: 350px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+            color: #fff;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: none;}
+        }
+        h1, h2, h3, h4 {
+            color: #fff;
+            text-shadow: 0 2px 24px #00000044;
+        }
+        h1 {
+            font-size: 2.3rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: 0.03em;
+        }
+        .filters-bar {
+            margin-bottom: 1.5rem;
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            align-items: center;
+        }
+        .filters-bar input, .filters-bar select {
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            border: none;
+            font-size: 1.08rem;
+        }
+        .filters-bar input[type="number"] {
+            width: 90px;
+        }
+        .produse-lista {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.2rem;
+            width: 100%;
+            justify-content: flex-start;
+        }
+        .produs-card {
+            background: rgba(34,37,44,0.7);
+            border-radius: 18px;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.18);
+            padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+            color: #fff;
+            width: 260px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .produs-card:hover {
+            box-shadow: 0 8px 32px 0 #fff2;
+            transform: translateY(-6px) scale(1.04);
+        }
+        .produs-card img {
+            max-width: 120px;
+            max-height: 120px;
+            border-radius: 10px;
+            border: 2px solid #fff;
+            background: #fff;
+            margin-bottom: 0.5rem;
+            cursor: pointer;
+            transition: box-shadow 0.2s, transform 0.2s;
+        }
+        .produs-card img:hover {
+            box-shadow: 0 4px 24px #fff2;
+            transform: scale(1.08);
+        }
+        .produs-card .produs-nume {
+            font-size: 1.18rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 0.7rem;
+            text-align: center;
+        }
+        .produs-card .produs-pret {
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.12rem;
+            margin-bottom: 0.5rem;
+        }
+        .produs-card .produs-pret .pret-vechi {
+            color: #bbb;
+            text-decoration: line-through;
+            margin-right: 0.5rem;
+            font-weight: 500;
+        }
+        .produs-card .produs-pret .pret-nou {
+            color: #ff3b3b;
+            font-weight: 800;
+        }
+        .produs-card .produs-pret .pret-crescut {
+            color: #fff;
+            font-weight: 800;
+        }
+        .produs-card .badge {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            background: #fff;
+            color: #232526;
+            font-weight: 700;
+            font-size: 0.97rem;
+            border-radius: 8px;
+            padding: 0.2rem 0.8rem;
+            z-index: 3;
+            box-shadow: 0 2px 8px #0002;
+        }
+        .produs-card .badge.reducere {
+            background: #ff3b3b;
+            color: #fff;
+            left: auto;
+            right: 12px;
+        }
+        .produs-card .badge.nou {
+            background: #00c853;
+            color: #fff;
+            left: 12px;
+            right: auto;
+        }
+        .btn {
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            margin-top: 0.5rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .btn-small {
+            background: #ffd700;
+            color: #222;
+            border-radius: 8px;
+            padding: 0.5rem 1.1rem;
+            font-size: 0.98rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            margin-left: 0.5rem;
+            margin-top: 0.5rem;
+            box-shadow: 0 2px 8px 0 rgba(0,0,0,0.08);
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            display: inline-block;
+        }
+        .btn-small:hover {
+            background: #222;
+            color: #ffd700;
+            transform: scale(1.06);
+        }
+        .pagination {
+            margin: 2rem 0 0 0;
+            display: flex;
+            gap: 0.7rem;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        .pagination button {
+            background: #fff;
+            color: #222;
+            border: none;
+            border-radius: 8px;
+            padding: 0.5rem 1.2rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .pagination button.active, .pagination button:hover {
+            background: #222;
+            color: #fff;
+        }
+        /* Lupe zburătoare */
+        .flying-loupe {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 60px;
+            height: 60px;
+            z-index: 0;
+            opacity: 0.7;
+            animation: flyLoupe linear infinite;
+            pointer-events: none;
+        }
+        .flying-loupe.loupe1 { top: 12%; animation-duration: 13s; }
+        .flying-loupe.loupe2 { top: 30%; animation-duration: 17s; animation-delay: 3s;}
+        .flying-loupe.loupe3 { top: 55%; animation-duration: 21s; animation-delay: 7s;}
+        .flying-loupe.loupe4 { top: 70%; animation-duration: 15s; animation-delay: 1s;}
+        .flying-loupe.loupe5 { top: 85%; animation-duration: 19s; animation-delay: 5s;}
+        .flying-loupe.loupe6 { top: 40%; animation-duration: 23s; animation-delay: 9s;}
+        @keyframes flyLoupe {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+        /* Buton adaugă produs admin */
+        #adauga-produs-btn {
+            background: #ffd700;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            margin-bottom: 1.5rem;
+            margin-top: 0.5rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+            display: none;
+        }
+        #adauga-produs-btn:hover {
+            background: #222;
+            color: #ffd700;
+            transform: scale(1.06);
+        }
+        /* Responsive pentru mobil */
+        @media (max-width: 900px) {
+            .main-content { padding: 1.2rem 0.5rem; }
+            .produse-lista { gap: 1.2rem; }
+            .produs-card { width: 46vw; min-width: 180px; max-width: 98vw; }
+        }
+        @media (max-width: 600px) {
+            .navbar { flex-direction: column; gap: 1.2rem; padding: 1.2rem 0.5rem 1rem 0.5rem; }
+            .main-content { margin-top: 1.2rem; padding: 0.7rem 0.1rem; }
+            .produs-card { width: 98vw; min-width: 0; }
+            .produs-card img { max-width: 90vw; }
+            .filters-bar { flex-direction: column; gap: 0.7rem; align-items: stretch; }
+            h1 { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<nav class="navbar">
+    <div class="logo">BlackVault</div>
+    <div class="nav-links" id="nav-links"></div>
+</nav>
+<body>
+    <!-- Lupe zburătoare pentru efect vizual -->
+    <svg class="flying-loupe loupe1" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe2" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe3" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe4" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe5" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe6" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content">
+        <h1>Catalogul Detectivilor</h1>
+        <button id="adauga-produs-btn">Adaugă produs</button>
+        <div class="filters-bar">
+            <input type="text" id="search-produs" placeholder="Caută joc, accesoriu sau gadget...">
+            <input type="number" id="pret-min" placeholder="Preț minim" min="0">
+            <input type="number" id="pret-max" placeholder="Preț maxim" min="0">
+            <select id="sortare">
+                <option value="">Sortare</option>
+                <option value="pret-cresc">Preț crescător</option>
+                <option value="pret-desc">Preț descrescător</option>
+                <option value="alfabetic">Alfabetic (A-Z)</option>
+                <option value="alfabetic-rev">Alfabetic (Z-A)</option>
+            </select>
+        </div>
+        <div class="produse-lista" id="produse-lista">
+            <!-- Produsele vor fi generate dinamic -->
+        </div>
+        <div class="pagination" id="pagination"></div>
+    </div>
+    <script>
+        // Navbar dinamic
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            const user = localStorage.getItem('user_curent');
+            let html = `
+                <a href="index.php">Acasă</a>
+                <a href="produse.html">Jocuri</a>
+                <a href="cos.html">Coș</a>
+            `;
+            let isAdmin = false;
+            if (user) {
+                html += `<a href="cont.html">Contul meu</a>`;
+                const userObj = JSON.parse(user);
+                if (userObj.rol === "admin" || userObj.tip === "admin" || userObj.isAdmin) {
+                    html += `
+                        <a href="admin-produse.html">Admin Produse</a>
+                        <a href="admin-comenzi.html">Admin Comenzi</a>
+                        <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                    `;
+                    isAdmin = true;
+                }
+                html += `<a href="#" id="logout-link" style="background:#fff;color:#222;">Deconectare</a>`;
+            } else {
+                html += `
+                    <a href="login_form.php">Login</a>
+                    <a href="register_form.php">Înregistrare</a>
+                `;
+            }
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login_form.php";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+
+        // Adaugă produs în coș
+        function adaugaInCos(idx) {
+            const produse = JSON.parse(localStorage.getItem('produse') || '[]');
+            const produs = produse[idx];
+            if (!produs) return;
+            let cos = JSON.parse(localStorage.getItem('cos') || '[]');
+            let gasit = cos.find(p => p.id === produs.id);
+            if (gasit) {
+                gasit.cantitate = (gasit.cantitate || 1) + 1;
+            } else {
+                cos.push({ ...produs, cantitate: 1 });
+            }
+            localStorage.setItem('cos', JSON.stringify(cos));
+            afiseazaMsg("Produs adăugat în coș!");
+        }
+
+        // Mesaj vizual
+        function afiseazaMsg(text) {
+            let msg = document.getElementById('msg-cos');
+            if (!msg) {
+                msg = document.createElement('div');
+                msg.id = 'msg-cos';
+                msg.style.position = 'fixed';
+                msg.style.top = '2.5rem';
+                msg.style.left = '50%';
+                msg.style.transform = 'translateX(-50%)';
+                msg.style.background = '#232526';
+                msg.style.color = '#fff';
+                msg.style.padding = '1rem 2.2rem';
+                msg.style.borderRadius = '16px';
+                msg.style.fontSize = '1.15rem';
+                msg.style.fontWeight = '600';
+                msg.style.boxShadow = '0 4px 24px 0 rgba(0,0,0,0.13)';
+                msg.style.zIndex = '100';
+                msg.style.opacity = '0';
+                msg.style.transition = 'opacity 0.3s';
+                document.body.appendChild(msg);
+            }
+            msg.textContent = text;
+            msg.style.opacity = '1';
+            setTimeout(() => { msg.style.opacity = '0'; }, 1800);
+        }
+
+        // Filtrele actuale
+        function getFilters() {
+            return {
+                search: document.getElementById('search-produs').value,
+                pretMin: parseFloat(document.getElementById('pret-min').value),
+                pretMax: parseFloat(document.getElementById('pret-max').value),
+                sort: document.getElementById('sortare').value,
+                page: window.currentPage || 1
+            };
+        }
+
+        // Afișare produse cu efecte de preț, badge NOU și reducere
+        function afiseazaProduse(filters = getFilters()) {
+            const produse = JSON.parse(localStorage.getItem('produse') || '[]');
+            const lista = document.getElementById('produse-lista');
+            const paginatie = document.getElementById('pagination');
+            lista.innerHTML = '';
+            paginatie.innerHTML = '';
+            if (!produse.length) {
+                lista.innerHTML = `<div style="color:#fff;font-size:1.2rem;">Nu există produse disponibile.</div>`;
+                return;
+            }
+            // Filtrare după search
+            let produseFiltrate = produse;
+            if (filters.search && filters.search.trim().length > 0) {
+                const s = filters.search.trim().toLowerCase();
+                produseFiltrate = produseFiltrate.filter(p =>
+                    (p.nume && p.nume.toLowerCase().includes(s)) ||
+                    (p.descriere && p.descriere.toLowerCase().includes(s))
+                );
+            }
+            // Filtru preț minim/maxim
+            if (!isNaN(filters.pretMin)) {
+                produseFiltrate = produseFiltrate.filter(p => Number(p.pret) >= filters.pretMin);
+            }
+            if (!isNaN(filters.pretMax)) {
+                produseFiltrate = produseFiltrate.filter(p => Number(p.pret) <= filters.pretMax);
+            }
+            // Sortare
+            if (filters.sort === "pret-cresc") {
+                produseFiltrate.sort((a, b) => Number(a.pret) - Number(b.pret));
+            } else if (filters.sort === "pret-desc") {
+                produseFiltrate.sort((a, b) => Number(b.pret) - Number(a.pret));
+            } else if (filters.sort === "alfabetic") {
+                produseFiltrate.sort((a, b) => (a.nume || "").localeCompare(b.nume || ""));
+            } else if (filters.sort === "alfabetic-rev") {
+                produseFiltrate.sort((a, b) => (b.nume || "").localeCompare(a.nume || ""));
+            }
+            // Paginare
+            const pePagina = 8;
+            const totalPagini = Math.ceil(produseFiltrate.length / pePagina) || 1;
+            let pagina = filters.page || 1;
+            if (pagina < 1) pagina = 1;
+            if (pagina > totalPagini) pagina = totalPagini;
+            window.currentPage = pagina;
+            const start = (pagina - 1) * pePagina;
+            const end = start + pePagina;
+            const produsePagina = produseFiltrate.slice(start, end);
+
+            if (!produseFiltrate.length) {
+                lista.innerHTML = `<div style="color:#fff;font-size:1.2rem;">Niciun produs găsit.</div>`;
+                return;
+            }
+            produsePagina.forEach((p, idx) => {
+                // Badge logic
+                let badgeNou = '';
+                let badgeReducere = '';
+                // Badge NOU dacă produsul a fost adăugat în ultimele 7 zile
+                if (p.dataAdaugare) {
+                    const dataProdus = new Date(p.dataAdaugare);
+                    const azi = new Date();
+                    const diffZile = (azi - dataProdus) / (1000 * 60 * 60 * 24);
+                    if (diffZile <= 7) {
+                        badgeNou = `<span class="badge nou">NOU</span>`;
+                    }
+                }
+                // Badge reducere dacă există reducere și prețul a scăzut
+                let pretVechi = Number(p.pretVechi) || null;
+                let pretNou = Number(p.pret);
+                let reducere = 0;
+                let pretHtml = '';
+                let pretCrescut = false;
+                if (pretVechi && pretNou < pretVechi) {
+                    reducere = Math.round(100 - (pretNou / pretVechi) * 100);
+                    badgeReducere = `<span class="badge reducere">-${reducere}%</span>`;
+                    pretHtml = `<span class="pret-vechi">${pretVechi.toFixed(2)} RON</span> <span class="pret-nou">${pretNou.toFixed(2)} RON</span>`;
+                } else if (pretVechi && pretNou > pretVechi) {
+                    pretCrescut = true;
+                    pretHtml = `<span class="pret-crescut">${pretNou.toFixed(2)} RON</span>`;
+                } else {
+                    pretHtml = `<span class="pret-nou">${pretNou.toFixed(2)} RON</span>`;
+                }
+
+                lista.innerHTML += `
+                    <div class="produs-card">
+                        ${badgeNou}
+                        ${badgeReducere}
+                        <a href="produs.html?id=${p.id}">
+                            ${p.poza ? `<img src="${p.poza}" alt="poza produs">` : ''}
+                        </a>
+                        <div class="produs-nume">${p.nume || ''}</div>
+                        <div class="produs-pret">${pretHtml}</div>
+                        <div style="display:flex;justify-content:center;align-items:center;">
+                            <button class="btn" onclick="adaugaInCos(${produse.indexOf(p)})">Cumpără acum</button>
+                            <a class="btn-small" href="produs.html?id=${p.id}">Vezi produs</a>
+                        </div>
+                    </div>
+                `;
+            });
+            // Paginatie
+            if (totalPagini > 1) {
+                let pagHtml = '';
+                if (pagina > 1) pagHtml += `<button onclick="schimbaPagina(${pagina-1})">&laquo; Înapoi</button>`;
+                for (let i = 1; i <= totalPagini; i++) {
+                    pagHtml += `<button onclick="schimbaPagina(${i})"${i===pagina?' class="active"':''}>${i}</button>`;
+                }
+                if (pagina < totalPagini) pagHtml += `<button onclick="schimbaPagina(${pagina+1})">Înainte &raquo;</button>`;
+                paginatie.innerHTML = pagHtml;
+            }
+        }
+        afiseazaProduse();
+
+        // Paginare
+        function schimbaPagina(p) {
+            window.currentPage = p;
+            afiseazaProduse(getFilters());
+            window.scrollTo({top: 0, behavior: "smooth"});
+        }
+
+        // Filtre live
+        document.getElementById('search-produs').addEventListener('input', function() {
+            window.currentPage = 1;
+            afiseazaProduse(getFilters());
+        });
+        document.getElementById('pret-min').addEventListener('input', function() {
+            window.currentPage = 1;
+            afiseazaProduse(getFilters());
+        });
+        document.getElementById('pret-max').addEventListener('input', function() {
+            window.currentPage = 1;
+            afiseazaProduse(getFilters());
+        });
+        document.getElementById('sortare').addEventListener('change', function() {
+            window.currentPage = 1;
+            afiseazaProduse(getFilters());
+        });
+
+        // Adăugare produs (doar pentru admin)
+        document.getElementById('adauga-produs-btn').onclick = function() {
+            const nume = prompt("Nume produs:");
+            const pret = prompt("Preț produs:");
+            const descriere = prompt("Descriere produs:");
+            const poza = prompt("Link poză (opțional):");
+            if (!nume || !pret) return;
+            let produse = JSON.parse(localStorage.getItem('produse') || '[]');
+            let idNou = produse.length ? (parseInt(produse[produse.length-1].id,10)+1).toString() : "1";
+            produse.push({
+                id: idNou,
+                nume,
+                pret,
+                descriere,
+                poza,
+                dataAdaugare: new Date().toISOString()
+            });
+            localStorage.setItem('produse', JSON.stringify(produse));
+            afiseazaProduse();
+        };
+
+        // Afișează butonul doar dacă userul e admin
+        (function(){
+            let user = {};
+            try { user = JSON.parse(localStorage.getItem('user_curent') || '{}'); } catch(e){}
+            if (user && (user.tip === "admin" || user.rol === "admin" || user.isAdmin)) {
+                document.getElementById('adauga-produs-btn').style.display = '';
+            }
+        })();
+
+        // Expune funcțiile pentru onclick dinamic
+        window.adaugaInCos = adaugaInCos;
+        window.schimbaPagina = schimbaPagina;
+    </script>
+    <script>
+    // ... restul scriptului tău ...
+
+    // Previne reîncărcarea inutilă dacă dai click pe pagina curentă din navbar
+    document.addEventListener('DOMContentLoaded', function() {
+        const nav = document.getElementById('nav-links');
+        nav.addEventListener('click', function(e) {
+            if (e.target.tagName === 'A') {
+                const href = e.target.getAttribute('href');
+                // Compară doar numele fișierului
+                if (window.location.pathname.endsWith(href)) {
+                    e.preventDefault();
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>
+</body>
+</html>

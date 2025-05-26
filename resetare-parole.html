@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Resetare parolă - BlackVault</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            min-height: 100vh;
+            background: url('images/slide01.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        .main-content {
+            max-width: 400px;
+            margin: 0 auto;
+            margin-top: 4rem;
+            background: rgba(255,255,255,0.13);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+            border: 1.5px solid rgba(255,255,255,0.18);
+            padding: 2.5rem 2rem 2rem 2rem;
+            backdrop-filter: blur(16px);
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            animation: fadeIn 0.7s cubic-bezier(.4,2,.6,1) 1;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px);}
+            to { opacity: 1; transform: none;}
+        }
+        .main-content h1 {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 2rem;
+            letter-spacing: 0.03em;
+            text-shadow: 0 2px 24px #00000044;
+        }
+        label {
+            font-weight: 700;
+            color: #ffd700;
+            margin-bottom: 0.3rem;
+            display: block;
+        }
+        input[type="email"], input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 0.7rem;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 1.2rem;
+            font-size: 1.08rem;
+            background: rgba(255,255,255,0.18);
+            color: #fff;
+        }
+        .btn {
+            background: #fff;
+            color: #222;
+            border-radius: 10px;
+            padding: 0.7rem 1.5rem;
+            font-size: 1.08rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            margin-top: 0.5rem;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .btn:hover { background: #222; color: #fff; transform: scale(1.06);}
+        .msg {
+            margin-top: 1rem;
+            color: #ffd700;
+            font-weight: 600;
+            font-size: 1.08rem;
+            min-height: 1.5em;
+        }
+        .success { color: #27c940; }
+        .navbar {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 2.5rem 1.5rem 2.5rem;
+            box-sizing: border-box;
+            background: rgba(34,34,34,0.22);
+            border-radius: 0 0 24px 24px;
+            box-shadow: 0 4px 24px 0 rgba(39,201,64,0.08);
+            backdrop-filter: blur(8px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .navbar .logo {
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: 0.04em;
+            text-shadow: 0 2px 12px rgba(39,201,64,0.08);
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 1.2rem;
+        }
+        .navbar .nav-links a {
+            background: #fff;
+            color: #222;
+            border-radius: 12px;
+            padding: 0.7rem 1.7rem;
+            font-size: 1.09rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s, color 0.2s, transform 0.1s;
+            box-shadow: 0 2px 12px 0 rgba(0,0,0,0.08);
+        }
+        .navbar .nav-links a:hover {
+            background: #222;
+            color: #fff;
+            transform: translateY(-2px) scale(1.04);
+        }
+        @media (max-width: 600px) {
+            .main-content { padding: 1.2rem 0.3rem; }
+            .navbar { flex-direction: column; gap: 1.2rem; padding: 1.2rem 0.5rem 1rem 0.5rem; }
+        }
+        /* Lupe zburătoare */
+        .flying-loupe {
+            position: fixed;
+            top: 0;
+            left: -100px;
+            width: 60px;
+            height: 60px;
+            z-index: 1;
+            opacity: 0.7;
+            animation: flyLoupe linear infinite;
+            pointer-events: none;
+        }
+        .flying-loupe.loupe1 { top: 12%; animation-duration: 13s; }
+        .flying-loupe.loupe2 { top: 30%; animation-duration: 17s; animation-delay: 3s;}
+        .flying-loupe.loupe3 { top: 55%; animation-duration: 21s; animation-delay: 7s;}
+        .flying-loupe.loupe4 { top: 70%; animation-duration: 15s; animation-delay: 1s;}
+        .flying-loupe.loupe5 { top: 85%; animation-duration: 19s; animation-delay: 5s;}
+        .flying-loupe.loupe6 { top: 40%; animation-duration: 23s; animation-delay: 9s;}
+        @keyframes flyLoupe {
+            0% { left: -100px; transform: rotate(-10deg) scale(1);}
+            90% { opacity: 0.7;}
+            100% { left: 110vw; transform: rotate(20deg) scale(1.07); opacity: 0.1;}
+        }
+    </style>
+</head>
+<body>
+    <!-- Lupe zburătoare pentru efect vizual -->
+    <svg class="flying-loupe loupe1" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe2" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe3" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe4" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe5" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <svg class="flying-loupe loupe6" viewBox="0 0 60 60"><circle cx="25" cy="25" r="18" stroke="#fff" stroke-width="4" fill="none"/><rect x="38" y="38" width="14" height="6" rx="3" fill="#fff" transform="rotate(45 45 41)"/></svg>
+    <nav class="navbar">
+        <div class="logo">BlackVault</div>
+        <div class="nav-links" id="nav-links"></div>
+    </nav>
+    <div class="main-content">
+        <h1>Resetare parolă</h1>
+        <form id="reset-form" method="POST" action="resetare-parola.php" autocomplete="off">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required autocomplete="off">
+            <label for="cod-backup">Cod backup:</label>
+            <input type="text" id="cod-backup" name="cod-backup" required autocomplete="off">
+            <label for="parola-noua">Parolă nouă:</label>
+            <input type="password" id="parola-noua" name="parola-noua" required autocomplete="off">
+            <button class="btn" type="submit">Resetează parola</button>
+        </form>
+        <div class="msg" id="msg">
+            <?php
+            if (isset($_GET['error'])) {
+                echo '<span style="color:#c92727;">'.htmlspecialchars($_GET['error']).'</span>';
+            }
+            if (isset($_GET['success'])) {
+                echo '<span class="success">'.htmlspecialchars($_GET['success']).'</span>';
+            }
+            ?>
+        </div>
+    </div>
+    <script>
+        // Navbar dinamic
+        function renderNavLinks() {
+            const nav = document.getElementById('nav-links');
+            const user = localStorage.getItem('user_curent');
+            let html = `
+                <a href="index.html">Acasă</a>
+                <a href="produse.html">Jocuri</a>
+                <a href="cos.html">Coș</a>
+            `;
+            if (user) {
+                html += `<a href="cont.html">Contul meu</a>`;
+                const userObj = JSON.parse(user);
+                if (userObj.rol === "admin" || userObj.tip === "admin" || userObj.isAdmin) {
+                    html += `
+                        <a href="admin-produse.html">Admin Produse</a>
+                        <a href="admin-comenzi.html">Admin Comenzi</a>
+                        <a href="admin-utilizatori.html">Admin Utilizatori</a>
+                    `;
+                }
+                html += `<a href="#" id="logout-link" style="background:#fff;color:#222;">Deconectare</a>`;
+            } else {
+                html += `
+                    <a href="login_form.php">Login</a>
+                    <a href="register_form.php">Înregistrare</a>
+                `;
+            }
+            nav.innerHTML = html;
+            setTimeout(() => {
+                const logout = document.getElementById('logout-link');
+                if (logout) logout.onclick = function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('user_curent');
+                    window.location.href = "login_form.php";
+                };
+            }, 100);
+        }
+        renderNavLinks();
+    </script>
+</body>
+</html>

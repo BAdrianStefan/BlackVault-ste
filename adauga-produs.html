@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Adaugă produs</title>
+</head>
+<body>
+    <h1>Adaugă produs</h1>
+    <form action="adauga-produs.php" method="post">
+        <label>Nume:</label>
+        <input type="text" name="nume" required><br>
+        <label>Preț:</label>
+        <input type="number" name="pret" step="0.01" required><br>
+        <label>Descriere:</label>
+        <textarea name="descriere"></textarea><br>
+        <label>Link poză:</label>
+        <input type="text" name="poza"><br>
+        <button type="submit">Adaugă produs</button>
+    </form>
+</body>
+</html>
